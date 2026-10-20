@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+My blog
+{% endblock %}
+
+{% block content %}
+        <h1>{{ title|upper }}</h1>
+        <p>{{ text|truncatewords:1 }}</p>
+
+        <p>{{ colors.0 }}</p>
+        <p>{{ colors.1 }}</p>
+        <p>{{ colors|length }}</p>
+        <p>{{ today|date:"d M Y"}}</p>
+        <p>{{ func }}</p>
+
+        <p>Current time: {% now "d/m/Y H:i:s" %}</p>
+
+        <ul>
+            {% for color in colors %}
+                <li>{{  color }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+           <p>Hello, {{ user.username }}</p>
+        {% else %}
+            <p>Hello guest!</p>
+        {% endif %}
+{% endblock %}
