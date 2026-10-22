@@ -1,29 +1,63 @@
 {% extends 'base.html' %}
-{% block title %}
-My blog
-{% endblock %}
-
+{% load static %}
 {% block content %}
-        <h1>{{ title|upper }}</h1>
-        <p>{{ text|truncatewords:1 }}</p>
 
-        <p>{{ colors.0 }}</p>
-        <p>{{ colors.1 }}</p>
-        <p>{{ colors|length }}</p>
-        <p>{{ today|date:"d M Y"}}</p>
-        <p>{{ func }}</p>
+<h1 class="page-title"><span class="eyebrow">THE EDITORIAL</span><br/>Stories worth <em>sharing.</em><span
+        class="page-subtitle">Thoughts, perspectives, and inspiration for the everyday.</span></h1>
+<!-- First Blog Post -->
+<section class="post-card"><h2 class="post-title">
+    <a href="post.html">Blog Post Title</a>
+</h2>
+    <p class="byline">
+        by <a href="index.php">Start Bootstrap</a>
+    </p>
+    <p>◷ Posted on August 28, 2013 at 10:00 PM</p><img alt="Abstract editorial illustration"
+                                                       class="img-fluid feature-image"
+                                                       src="{% static 'blog/assets/feature.svg' %}"/>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus
+        inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis
+        ipsum officiis rerum.</p><a class="btn btn-accent" href="post.html">Read article →</a></section>
 
-        <p>Current time: {% now "d/m/Y H:i:s" %}</p>
 
-        <ul>
-            {% for color in colors %}
-                <li>{{  color }}</li>
-            {% endfor %}
-        </ul>
+<!-- Second Blog Post -->
+<section class="post-card"><h2 class="post-title">
+    <a href="post.html">Blog Post Title</a>
+</h2>
+    <p class="byline">
+        by <a href="index.php">Start Bootstrap</a>
+    </p>
+    <p>◷ Posted on August 28, 2013 at 10:45 PM</p><img alt="Abstract editorial illustration"
+                                                       class="img-fluid feature-image"
+                                                       src="{% static 'blog/assets/feature.svg' %}"/>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum
+        voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum
+        perferendis labore impedit voluptates!</p><a class="btn btn-accent" href="post.html">Read article
+        →</a></section>
 
-        {% if user.is_authenticated %}
-           <p>Hello, {{ user.username }}</p>
-        {% else %}
-            <p>Hello guest!</p>
-        {% endif %}
+
+<!-- Third Blog Post -->
+<section class="post-card"><h2 class="post-title">
+    <a href="post.html">Blog Post Title</a>
+</h2>
+    <p class="byline">
+        by <a href="index.php">Start Bootstrap</a>
+    </p>
+    <p>◷ Posted on August 28, 2013 at 10:45 PM</p><img alt="Abstract editorial illustration"
+                                                       class="img-fluid feature-image"
+                                                       src="{% static 'blog/assets/feature.svg' %}"/>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore
+        ipsam cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores
+        provident id incidunt autem. Magni, ratione.</p><a class="btn btn-accent" href="post.html">Read
+        article →</a></section>
+
+
+<!-- Pager -->
+<ul class="pager d-flex justify-content-between list-unstyled mt-4">
+    <li class="previous">
+        <a class="pager-link" href="#">← Older</a>
+    </li>
+    <li class="next">
+        <a class="pager-link" href="#">Newer →</a>
+    </li>
+</ul>
 {% endblock %}
