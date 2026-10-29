@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.utils import timezone
 
+from .models import Post, Category, Tag
+
 
 def dummy():
     return "func working!"
@@ -8,7 +10,10 @@ def dummy():
 
 # Create your views here.
 def index(request):
-    context = {}
+    posts = Post.objects.all()
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
+    context = {'posts': posts, 'categories': categories, 'tags': tags}
     return render(request, 'blog/index.html', context)
 
 
