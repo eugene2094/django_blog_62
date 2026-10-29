@@ -22,9 +22,8 @@
             </p>
             <p>◷ Posted on {{ post.published_date }}</p>
             <img alt="Abstract editorial illustration" class="img-fluid feature-image" src="{% static 'blog/assets/feature.svg' %}"/>
-            <p>{{ post.content|truncatewords:20 }}</p><a class="btn btn-accent" href="{% url 'blog:post' %}">Read article →</a>
+            <p>{{ post.content|truncatewords:20 }}</p><a class="btn btn-accent" href="{% url 'blog:post_detail' post.slug %}">Read article →</a>
         </section>
-
 {% empty %}
   <p>Поки що немає постів.</p>
 {% endfor %}
