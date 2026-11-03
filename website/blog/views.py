@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.utils import timezone
+from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+
+from .forms import PostForm
 from .models import Post, Category, Tag
+from django.db.models import Q
 
 
 def get_categories():
@@ -14,9 +16,18 @@ def get_categories():
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
-    categories = Category.objects.all()
     tags = Tag.objects.all()
-    context = {'posts': posts, 'tags': tags}
+
+    category_id = request.GET.get('category', None)
+    query = request.GET.get('q', "").strip()
+
+    if category_id:
+        posts = posts.filter(category=category_id)
+
+    if query:
+        posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))
+
+    context = {'posts': posts, 'tags': tags,'selected_category': category_id}
     context.update(get_categories())
     return render(request, 'blog/index.html', context)
 
@@ -31,3 +42,19 @@ def get_post(request, post_slug):
 def contact(request):
     context = {}
     return render(request, 'blog/contact.html', context)
+
+
+def post_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            form.save_m2m()
+            return redirect('/')
+    else:
+        form = PostForm()
+
+    return render(request, 'blog/post_create.html', {'form': form})
