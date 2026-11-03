@@ -30,6 +30,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
     tags = models.ManyToManyField(Tag, blank=True)
     slug = models.SlugField(max_length=200,unique=True,blank=True)
+    image = models.ImageField(upload_to='posts/', blank=True,verbose_name='Обкладинка')
 
     def save(self, *args, **kwargs):
         if not self.slug:

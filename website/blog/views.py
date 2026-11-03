@@ -46,7 +46,7 @@ def contact(request):
 
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST,request.FILES)
 
         if form.is_valid():
             post = form.save(commit=False)
@@ -58,3 +58,17 @@ def post_create(request):
         form = PostForm()
 
     return render(request, 'blog/post_create.html', {'form': form})
+
+
+def post_update(request, id):
+    post = get_object_or_404(Post, id=id,user=request.user)
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'blog/post_update.html', {'form': form})
+
+

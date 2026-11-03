@@ -2,8 +2,15 @@
 {% block content %}
 <!-- Blog Post -->
 <!-- Title -->
+{% if user == post.user %}
+    <a class="btn" href="{% url 'blog:post_update' post.id %}">Update post</a>
+{% endif %}
+
 <div class="eyebrow mb-3">FEATURED STORY / JOURNAL</div>
 <h1 class="article-title">{{ post.title }}</h1>
+
+<img src="{{ post.image.url }}" alt="{{ post.title }}" width="400px" >
+
 <ul class="list-unstyled category-list d-flex ">
                 {% for tag in post.tags.all %}
                      <li class="m-1"><a href="#">#{{ tag.name }}</a></li>
@@ -20,7 +27,6 @@
 <p>◷ Posted on {{ post.published_date }}</p>
 <hr class="soft-divider"/>
 <!-- Preview Image -->
-<img alt="Abstract editorial illustration" class="img-fluid feature-image" src="assets/feature.svg"/>
 <hr class="soft-divider"/>
 <!-- Post Content -->
 <p class="lead intro-text"> {{ post.content }}</p>

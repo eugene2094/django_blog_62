@@ -21,7 +21,7 @@
                 by <a href="index.php">{{ post.user }}</a>
             </p>
             <p>◷ Posted on {{ post.published_date }}</p>
-            <img alt="Abstract editorial illustration" class="img-fluid feature-image" src="{% static 'blog/assets/feature.svg' %}"/>
+            <img alt="Abstract editorial illustration" class="img-fluid feature-image" src="{{ post.image.url }}"/>
             <p>{{ post.content|truncatewords:20 }}</p><a class="btn btn-accent" href="{% url 'blog:post_detail' post.slug %}">Read article →</a>
         </section>
 {% empty %}
