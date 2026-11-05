@@ -1,7 +1,8 @@
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
-from .forms import PostForm
+from .forms import PostForm, RegisterForm
 from .models import Post, Category, Tag
 from django.db.models import Q
 
@@ -27,7 +28,7 @@ def index(request):
     if query:
         posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))
 
-    context = {'posts': posts, 'tags': tags,'selected_category': category_id}
+    context = {'posts': posts, 'tags': tags, 'selected_category': category_id}
     context.update(get_categories())
     return render(request, 'blog/index.html', context)
 
@@ -46,7 +47,7 @@ def contact(request):
 
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST,request.FILES)
+        form = PostForm(request.POST, request.FILES)
 
         if form.is_valid():
             post = form.save(commit=False)
@@ -61,9 +62,9 @@ def post_create(request):
 
 
 def post_update(request, id):
-    post = get_object_or_404(Post, id=id,user=request.user)
+    post = get_object_or_404(Post, id=id, user=request.user)
     if request.method == 'POST':
-        form = PostForm(request.POST,request.FILES, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return redirect('/')
@@ -72,3 +73,17 @@ def post_update(request, id):
     return render(request, 'blog/post_update.html', {'form': form})
 
 
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'register.html', {'form': form})
