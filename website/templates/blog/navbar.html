@@ -19,7 +19,8 @@
                        <button class="btn btn-danger" type="submit">Logout</button>
                    </form>
                 {% else %}
-                <button class="btn btn-primary"><a href="{% url 'blog:register' %}">Register</a></button>
+                <button class="btn btn-success"><a href="{% url 'blog:register' %}">Register</a></button>
+                 <button class="btn btn-primary"><a href="{% url 'blog:login' %}">Login</a></button>
                 {% endif %}
             </ul>
         </div>

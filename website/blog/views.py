@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
@@ -44,12 +45,13 @@ def contact(request):
     context = {}
     return render(request, 'blog/contact.html', context)
 
-
+@login_required
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
 
         if form.is_valid():
+
             post = form.save(commit=False)
             post.user = request.user
             post.save()
@@ -60,7 +62,7 @@ def post_create(request):
 
     return render(request, 'blog/post_create.html', {'form': form})
 
-
+@login_required
 def post_update(request, id):
     post = get_object_or_404(Post, id=id, user=request.user)
     if request.method == 'POST':
